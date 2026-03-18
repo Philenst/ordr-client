@@ -7,8 +7,8 @@ export interface WssServerToClientEvents {
 
 export interface WssClientToServerEvents {
     id: (data: { id: string; version: number; usingOsuApi: boolean; motionBlurCapable: boolean; uhdCapable: boolean; isRendering: boolean; encodingWith: string; customization: ICustomizationSettings }) => void
-    progression: (data: { id: string; progress: string }) => void
-    panic: (data: { id: string; crash: string }) => void
+    progression: (data: { progress: string }) => void
+    panic: (data: { crash: string }) => void
     customization_change: (data: ICustomizationSettings) => void
 }
 

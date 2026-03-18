@@ -70,10 +70,7 @@ export default async function connectToWebsocket(keys: TKeysFile, version: numbe
         await prepareCommonAssets()
         let preparationResult = await prepareRenderAssets(data)
         if (!preparationResult.success) {
-            ioClient.emit("progression", {
-                id: clientId,
-                progress: preparationResult.error ?? "UNKNOWN"
-            })
+            ioClient.emit("progression", { progress: preparationResult.error ?? "UNKNOWN" })
             endJob()
             console.log("Waiting for a new job.")
             return
@@ -86,10 +83,7 @@ export default async function connectToWebsocket(keys: TKeysFile, version: numbe
         // delete the replay we just rendered, no matter if the render failed or not
         fs.rmSync(`data/replays/${data.renderID}.osr`)
         if (!renderResult.success) {
-            ioClient.emit("progression", {
-                id: clientId,
-                progress: renderResult.error ? `DANSER_${renderResult.error}` : "UNKNOWN"
-            })
+            ioClient.emit("progression", { progress: renderResult.error ? `DANSER_${renderResult.error}` : "UNKNOWN" })
             endJob()
             if (renderResult.exit) await cleanExit() // if the error is too serious, we're exiting the client
             console.log("Waiting for a new job.")
@@ -97,18 +91,15 @@ export default async function connectToWebsocket(keys: TKeysFile, version: numbe
         }
 
         console.log("Uploading video.")
-        ioClient.emit("progression", { id: clientId, progress: "UPLOADING" })
+        ioClient.emit("progression", { progress: "UPLOADING" })
         let uploadResult = await uploadVideo(data)
         if (!uploadResult.success) {
-            ioClient.emit("progression", {
-                id: clientId,
-                progress: uploadResult.error ?? "UNKNOWN"
-            })
+            ioClient.emit("progression", { progress: uploadResult.error ?? "UNKNOWN" })
             endJob()
             console.log("Waiting for a new job.")
             return
         }
-        ioClient.emit("progression", { id: clientId, progress: "Done." })
+        ioClient.emit("progression", { progress: "Done." })
         endJob(true)
         console.log("Video rendered and uploaded successfully! Waiting for a new job.")
     })
@@ -151,20 +142,13 @@ export async function disconnectWebsocket() {
     if (ioClient) ioClient.disconnect()
 }
 
-// TODO next ver: we shouldn't send the ID anymore after the first connection! server needs to use the socket id to track clients
 export async function sendProgression(data: string) {
-    ioClient.emit("progression", {
-        id: clientId,
-        progress: data
-    })
+    ioClient.emit("progression", { progress: data })
 }
 
 export async function handlePanic(data: string) {
     // send the crash to the o!rdr server
-    ioClient.emit("panic", {
-        id: clientId,
-        crash: "danser crash: " + data
-    })
+    ioClient.emit("panic", { crash: "danser crash: " + data })
     await writeCrashReport(data, "danser")
 }
 
