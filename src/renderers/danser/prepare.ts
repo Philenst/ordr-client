@@ -21,8 +21,7 @@ export async function prepareDanserStartup(startupData: TStartupData) {
     //    console.log("The version of danser is too old or corrupted, updating now")
     //    await updateDanser(startupData.danserVersion)
     //}
-
-    await updateDanser("0.12.0-s2")
+    if (!fs.existsSync("bins/danser/danser-cli")) await updateDanser("0.12.0-s2")
 
     // run danser dry once to make sure it can open
     await danserDryRun()
