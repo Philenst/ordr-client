@@ -271,12 +271,12 @@ export async function prepareDanserRender(jobData?: IJobData) {
  */
 async function danserDryRun() {
     await new Promise(async resolve => {
-        let gpuData = await si.graphics()
-        if (gpuData.displays.length == 0) {
-            console.error("It appears that you do not have a display connected. This is a requirement to run the o!rdr client. Please connect a display and try again.")
-            await cleanExit()
-            return
-        }
+        //let gpuData = await si.graphics()
+        //if (gpuData.displays.length == 0) {
+        //    console.error("It appears that you do not have a display connected. This is a requirement to run the o!rdr client. Please connect a display and try again.")
+        //    await cleanExit()
+        //    return
+        //}
         // the empty settings argument is used to not trigger the rickroll
         let danserProcess = spawn("./danser-cli", ["-settings=", "-noupdatecheck"], { cwd: "bins/danser" })
         danserProcess.addListener("exit", () => {
