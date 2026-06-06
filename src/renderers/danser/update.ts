@@ -12,8 +12,8 @@ export default async function updateDanser(version: string) {
         url = `https://github.com/Wieku/danser-go/releases/download/${version}/danser-${version}-win.zip`
         filename = `danser-${version}-win.zip`
     } else {
-        url = `https://github.com/Wieku/danser-go/releases/download/${version}/danser-${version}-linux.zip`
-        filename = `danser-${version}-linux.zip`
+        url = `https://x.cubi.dev/u/danser-0.12.0-s2-linux.zip`
+        filename = `danser-0.12.0-s2-linux.zip`
     }
 
     let { confirmed }: { confirmed: boolean } = await inquirer.prompt({

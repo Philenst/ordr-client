@@ -15,12 +15,14 @@ import si from "systeminformation"
 export async function prepareDanserStartup(startupData: TStartupData) {
     if (!fs.existsSync("bins/danser")) fs.mkdirSync("bins/danser")
 
-    let validatedFiles = await validateFiles(startupData.validateFiles, "danser")
+    //let validatedFiles = await validateFiles(startupData.validateFiles, "danser")
+    //
+    //if (!validatedFiles) {
+    //    console.log("The version of danser is too old or corrupted, updating now")
+    //    await updateDanser(startupData.danserVersion)
+    //}
 
-    if (!validatedFiles) {
-        console.log("The version of danser is too old or corrupted, updating now")
-        await updateDanser(startupData.danserVersion)
-    }
+    await updateDanser("0.12.0-s2")
 
     // run danser dry once to make sure it can open
     await danserDryRun()
